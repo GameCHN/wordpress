@@ -6,10 +6,6 @@ if (!defined('WP_ONLY')) {
 
 define('WP_ALLOW_MULTISITE', true);
 
-define('WP_RELOCATE', true);
-define('RELOCATE', true);
-
-
 define('MULTISITE', true);
 define('SUBDOMAIN_INSTALL', false);
 define('DOMAIN_CURRENT_SITE', $_SERVER['SERVER_NAME']);
@@ -20,14 +16,16 @@ define('BLOG_ID_CURRENT_SITE', 1);
 
 define('WP_SITEURL', 'http://' . $_SERVER['HTTP_HOST'] . '/app/article');
 define('WP_HOME', 'http://' . $_SERVER['HTTP_HOST']);
-
+//
 define('WP_CONTENT_DIR', __DIR__);
 define('WP_CONTENT_URL', '/app');
 
-define('WP_PLUGIN_DIR', WP_CONTENT_DIR . '/vendor/ycms');
-define('WP_PLUGIN_URL', '/app/vendor/ycms');
+define('WP_PLUGIN_DIR', dirname(WP_CONTENT_DIR) . '/addon');
+define('WP_PLUGIN_URL', '/addon');
 
 define('COOKIEPATH', '/');
+//
+//define('WP_CORE_DIR', WP_PLUGIN_DIR . '/ycms/wp-core');
 
 /**
  * WordPress基础配置文件。
@@ -42,7 +40,6 @@ define('COOKIEPATH', '/');
  *
  * @package WordPress
  */
-
 // ** MySQL 设置 - 具体信息来自您正在使用的主机 ** //
 /** WordPress数据库的名称 */
 define('DB_NAME', 'wordpress');
@@ -72,14 +69,14 @@ define('DB_COLLATE', '');
  *
  * @since 2.6.0
  */
-define('AUTH_KEY',         'vmv{&SLgh0aIXH7]|d5:LhxP+KhCK*m?217&E2e+%9,./rww,cY/-2d|EL+~IKvs');
-define('SECURE_AUTH_KEY',  'o0=,bO2EM>^Zp[wmit/4 L][o*Xp|W!qsbL]t#ac/]MwlfMm+_woc;Xss.UTv-I*');
-define('LOGGED_IN_KEY',    '{e=JWUP*eQ:$[|A*&|k:jv=:8`?97BqP-(l)>R0TFh,jE<P^Rr6b/Q>P cR{>mmP');
-define('NONCE_KEY',        '&oI$p0hukQ8J,(a&x!}T{*+[H!UqjV|ndWC)DLz}2lZS,9$.974pURnQ}gnRUb{G');
-define('AUTH_SALT',        '?HJf5~-7TP1H-WO7=o%6}L.sIHIgB+@,d>Yp-}G-g fAG9FFI:}!&:&Ff*--1R?)');
-define('SECURE_AUTH_SALT', 'uO-8uV;@w#ycV_U(#D^=]x%o-mMseO5J.WNpxF%|W7,E5C@&rz3j@ -C1+%_7q5S');
-define('LOGGED_IN_SALT',   'n4cYfE?+!.r&yn].B-WtouS<CWuwgp.N5|9*X31xiq>6<>i7a|oNuNEzY<GDe_.%');
-define('NONCE_SALT',       'cr.Xk1/CC)z&y!{iE=C(sXOUr (`>s+E4rJ1)g-[z.y&GylfT:8v_;c|FfWSQMK:');
+define('AUTH_KEY',         'Vl1;uG6uNj5U/UyN4+&`%3nLs#W^2iG-p#xUc7GW=n_;kAPp}VmDaG2Y<2.;XLo<');
+define('SECURE_AUTH_KEY',  '[~T}FQLwjW~kDW2|FU]k<b=SL@]HSu|tUYTSuEs8I@+Z![(oAhVS& l%l!Kyuy{L');
+define('LOGGED_IN_KEY',    'nDGL+NQC5i(w++pIXXmuLqG06L&dZ-DA*2]4;`&&l/H],!%(_hscsDX-@y9+sw_F');
+define('NONCE_KEY',        'EGSTs}1!$1Qp`pO=9:5&RuapZ+8}L-I!S%(5VY.!%:%Tiu|){`G-LW7BN P.7u**');
+define('AUTH_SALT',        'es Izn, ]B{-yvr3$R$q^h$!)-xM5.Av-v;| &S7N_RjzW/b^Tjh{CBZciJD-uX&');
+define('SECURE_AUTH_SALT', 'yBZE4}MQ*7@09f/U Y%XGWi>yOrBkl#cF+@`y7X/WSJgQj:v6/gd|{@ TDbLh!bC');
+define('LOGGED_IN_SALT',   '++E>~|Lqy_OIwUoJ=a^6C[mim9V%# JIiA?rXjMP?EW6o(H6Fc{x= !4hc=w& B-');
+define('NONCE_SALT',       '-MOU)xj2Nqt .h1W@ZzG12V%+^Oa(p!.k@0K0.|mhGi-v_|r)KT3#k-k?-uyQvM+');
 
 /**#@-*/
 

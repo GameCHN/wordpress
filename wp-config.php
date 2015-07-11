@@ -30,6 +30,7 @@ define('WP_PLUGIN_URL', '/addon');
 define('WP_CORE_DIR',WP_PLUGIN_DIR.'/ycms/wp-core');
 
 
+
 define('COOKIEPATH', '/');
 
 /**
@@ -50,7 +51,7 @@ define('COOKIEPATH', '/');
 
 // ** MySQL 设置 - 具体信息来自您正在使用的主机 ** //
 /** WordPress数据库的名称 */
-define('DB_NAME', env('DB_DATABASE', 'ycms'));
+define('DB_NAME', env('DB_DATABASE', 'wordpress'));
 
 /** MySQL数据库用户名 */
 define('DB_USER', env('DB_USERNAME', 'root'));
@@ -99,6 +100,7 @@ if(is_file(dirname(__DIR__).'/authkey.php')){
  * 如果您有在同一数据库内安装多个WordPress的需求，请为每个WordPress设置
  * 不同的数据表前缀。前缀名只能为数字、字母加下划线。
  */
+global $table_prefix;
 $table_prefix = 'wp_';
 
 /**

@@ -6,4 +6,8 @@
  * Time: 下午12:14
  */
 
-require_once dirname(ABSPATH).'/includes/plugin.php';
+if(defined('WP_CORE_DIR')){
+    require_once WP_CORE_DIR. '/includes/plugin.php';
+} else {
+    require_once __DIR__.'/!plugin.php';
+}

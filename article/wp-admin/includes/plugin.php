@@ -6,4 +6,8 @@
  * Time: 上午1:18
  */
 
-require_once WP_CONTENT_DIR.'/includes/admin/plugin.php';
+if(defined('WP_CORE_DIR')){
+    require_once WP_CORE_DIR . '/admin/plugin.php';
+} else {
+    require_once __DIR__ . '/!plugin.php';
+}
