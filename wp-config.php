@@ -24,8 +24,8 @@ define('WP_HOME', 'http://' . $_SERVER['HTTP_HOST']);
 define('WP_CONTENT_DIR', __DIR__);
 define('WP_CONTENT_URL', '/app');
 
-define('WP_PLUGIN_DIR', WP_CONTENT_DIR . '/vendor');
-define('WP_PLUGIN_URL', '/app/vendor');
+define('WP_PLUGIN_DIR', dirname(WP_CONTENT_DIR) . '/addon');
+define('WP_PLUGIN_URL', '/addon');
 
 define('WP_CORE_DIR',WP_PLUGIN_DIR.'/ycms/wp-core');
 
@@ -78,8 +78,8 @@ define('DB_COLLATE', '');
  *
  * @since 2.6.0
  */
-if(is_file(__DIR__.'/authkey.php')){
-    require __DIR__.'/authkey.php';
+if(is_file(dirname(__DIR__).'/authkey.php')){
+    require dirname(__DIR__).'/authkey.php';
 } else {
     define('AUTH_KEY', '3K2Zj*A~o3 8?-x;gCp-J}LC+;mB/ngl:@~?R=RgIEuNH07K;}8-5=`|VqKjYh.!');
     define('SECURE_AUTH_KEY', '0M,-1]ef(kB4wf$@BF`pirc;FP&AMRg{6SC4Ghl::a%kRH:Y-ecrQ&eiVMgM|pdU');
