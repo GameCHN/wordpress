@@ -25,7 +25,7 @@ define('WP_CONTENT_DIR', __DIR__);
 define('WP_CONTENT_URL', '/app');
 
 define('WP_PLUGIN_DIR', dirname(WP_CONTENT_DIR) . '/addon');
-define('WP_PLUGIN_URL', '../addon');
+define('WP_PLUGIN_URL', '/../addon');
 
 define('WP_CORE_DIR',WP_PLUGIN_DIR.'/ycms/wp-core');
 
