@@ -29,7 +29,8 @@ define('WP_PLUGIN_URL', '/../../addon');
 
 define('WP_CORE_DIR',WP_PLUGIN_DIR.'/ycms/wp-core');
 
-
+define('WPMU_PLUGIN_DIR',WP_CORE_DIR);
+define('WPMU_PLUGIN_URL','/addon/ycms/wp-core');
 
 define('COOKIEPATH', '/');
 
