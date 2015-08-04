@@ -229,9 +229,9 @@ function _wp_menu_output( $menu, $submenu, $submenu_as_parent = true ) {
         <a href="<?=home_url()?>" target="_blank" class="logo">
             <div class="wp-menu-image dashicons-before dashicons-admin-post"><br></div>
             <!-- mini logo for sidebar mini 50x50 pixels -->
-            <span class="logo-mini"><b>OWOL</b>ADMIN</span>
+            <span class="logo-mini"><b>OWOL</b></span>
             <!-- logo for regular state and mobile devices -->
-            <span class="logo-lg"><b>OWOL</b>ADMIN</span>
+            <span class="logo-lg"><b>OWOL</b></span>
         </a>
     </li>
 

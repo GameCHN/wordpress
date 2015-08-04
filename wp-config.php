@@ -18,8 +18,8 @@ define('SITE_ID_CURRENT_SITE', 1);
 define('BLOG_ID_CURRENT_SITE', 1);
 
 
-define('WP_SITEURL', 'http://' . $_SERVER['HTTP_HOST'] . '/app/article');
-define('WP_HOME', 'http://' . $_SERVER['HTTP_HOST']);
+//define('WP_SITEURL', 'http://' . $_SERVER['HTTP_HOST'] . '/app/article');
+//define('WP_HOME', 'http://' . $_SERVER['HTTP_HOST']);
 
 define('WP_CONTENT_DIR', __DIR__);
 define('WP_CONTENT_URL', '/app');
