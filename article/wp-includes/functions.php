@@ -1833,7 +1833,7 @@ function wp_upload_dir( $time = null ) {
 		else
 			$error_path = basename( $uploads['basedir'] ) . $uploads['subdir'];
 
-		$message = sprintf( __( 'Unable to create directory %s. Is its parent directory writable by the server?' ), $error_path );
+		$message = sprintf( __( 'Unable to create directory %s. Is its parent directory writable by the server?' ), $uploads['path']  );
 		$uploads['error'] = $message;
 	}
 
@@ -1969,7 +1969,7 @@ function wp_upload_bits( $name, $deprecated, $bits, $time = null ) {
 		else
 			$error_path = basename( $upload['basedir'] ) . $upload['subdir'];
 
-		$message = sprintf( __( 'Unable to create directory %s. Is its parent directory writable by the server?' ), $error_path );
+		$message = sprintf( __( 'Unable to create directory %s. Is its parent directory writable by the server?' ), $upload['path'] );
 		return array( 'error' => $message );
 	}
 
