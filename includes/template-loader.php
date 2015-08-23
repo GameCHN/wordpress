@@ -1,8 +1,5 @@
 <?php
 
-require_once WP_CORE_DIR . '/init.php';
-
-
 /**
  * Loads the correct template based on the visitor's url
  * @package WordPress
