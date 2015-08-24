@@ -6,6 +6,8 @@
  * @subpackage Administration
  */
 
+error_reporting(E_ALL & ~E_NOTICE & ~E_DEPRECATED & ~E_STRICT);
+
 
 if ( ! defined('WP_ADMIN') ) {
 	/*
