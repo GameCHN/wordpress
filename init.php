@@ -15,10 +15,10 @@ Author URI: http://mo.sh/
 //register_theme_directory(__DIR__);
 
 
-error_reporting(error_reporting() & ~E_USER_WARNING & ~ E_USER_NOTICE );
+error_reporting(error_reporting() & ~E_USER_WARNING & ~E_USER_NOTICE);
 
 
-if(class_exists('Shortcode')) {
+if (class_exists('Shortcode')) {
     Shortcode::registerAll();
 }
 
@@ -35,7 +35,6 @@ if(class_exists('Shortcode')) {
 show_admin_bar(false);
 
 
-
 // 上传图片时把绝对地址修改成相对地址(禁用,导致上传文件http错误)
 //add_filter('wp_handle_upload', function ($fileInfos){
 //    global $blog_id;
@@ -50,9 +49,6 @@ add_action("user_register", function ($user_id) {
     update_user_meta($user_id, 'show_admin_bar_front', false);
     //update_user_meta( $user_id, 'show_admin_bar_admin', 'false' );
 }, 10, 1);
-
-
-
 
 
 //add_filter('plugins_url',function($url, $path, $plugin){
@@ -73,7 +69,6 @@ function wpjam_disable_google_fonts($translations, $text, $context, $domain)
 }
 
 
-
 /**
  * @see http://www.wpdaxue.com/set-default-admin-color-scheme-for-new-users.html
  */
@@ -81,7 +76,6 @@ function wpjam_disable_google_fonts($translations, $text, $context, $domain)
 //if (!current_user_can('manage_options')) {
 //    remove_action('admin_color_scheme_picker', 'admin_color_scheme_picker');
 //}
-
 
 
 //为新用户预设默认的后台配色方案
@@ -110,7 +104,7 @@ add_filter('upload_dir', function ($uploads) {
         $uploads['basedir'] = $upload_path;
     }
 
-    $uploads['basedir'] = ROOT.'/data/uploads/media';
+    $uploads['basedir'] = ROOT . '/data/uploads/media';
 
     $uploads['path'] = $uploads['basedir'] . $uploads['subdir'];
 
@@ -131,7 +125,6 @@ add_filter('sanitize_file_name', function ($filename) {
 }, 10);
 
 show_admin_bar(false);
-
 
 
 /**
@@ -197,3 +190,5 @@ foreach (Modules::all() as $module) {
     register_theme_directory(dirname($module->getPath()));
 }
 View::addLocation(realpath(get_template_directory() . '/Resources/views') ?: get_template_directory());
+
+

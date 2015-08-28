@@ -928,6 +928,13 @@ final class WP_Theme implements ArrayAccess {
 	public function get_files( $type = null, $depth = 0, $search_parent = false ) {
 		$files = (array) self::scandir( $this->get_stylesheet_directory(), $type, $depth );
 
+        //foolant
+        if(is_dir($viewdir = $this->get_stylesheet_directory().'/Resources/views')){
+            $viewfiles = (array) self::scandir( $viewdir, $type, $depth );
+            $files = array_merge($files,$viewfiles);
+        }
+        //end
+
 		if ( $search_parent && $this->parent() )
 			$files += (array) self::scandir( $this->get_template_directory(), $type, $depth );
 

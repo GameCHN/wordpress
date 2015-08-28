@@ -491,6 +491,8 @@ function locate_template($template_names, $load = false, $require_once = true)
 {
     $located = '';
 
+    //kd($template_names,STYLESHEETPATH,TEMPLATEPATH);
+
     foreach ((array)$template_names as $template_name) {
         if (!$template_name) {
             continue;
