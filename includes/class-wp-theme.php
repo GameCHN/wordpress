@@ -935,8 +935,14 @@ final class WP_Theme implements ArrayAccess {
         }
         //end
 
-		if ( $search_parent && $this->parent() )
-			$files += (array) self::scandir( $this->get_template_directory(), $type, $depth );
+		if ( $search_parent && $this->parent() ){
+            $parentFiles = (array) self::scandir( $this->get_template_directory(), $type, $depth );
+            if(is_dir($pdir = $this->get_template_directory().'/Resources/views')){
+                $parentFiles = array_merge($parentFiles,(array) self::scandir( $pdir, $type, $depth ));
+            }
+            $files += $parentFiles;
+
+        }
 
 		return $files;
 	}
