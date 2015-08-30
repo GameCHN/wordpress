@@ -22,6 +22,8 @@ if (class_exists('Shortcode')) {
     Shortcode::registerAll();
 }
 
+//kd(ot_get_option('phone_num') ?: '1800 011 2211');
+
 
 //add_filter('theme_root',function($theme_root){
 //    return __DIR__;
@@ -183,6 +185,9 @@ function init_smilies()
 
 add_action('init', 'init_smilies', 5);
 
+//禁止后台配色
+remove_action( 'admin_color_scheme_picker', 'admin_color_scheme_picker' );
+
 //require __DIR__.'/extra/remove-category-parents.php';
 
 /** @type \YCMS\Modules\Module $module */
@@ -191,7 +196,7 @@ foreach (Modules::all() as $module) {
 }
 
 View::addLocation(realpath(get_stylesheet_directory() . '/Resources/views') ?: get_stylesheet_directory());
-if(get_stylesheet_directory() != get_template_directory()){
+if (get_stylesheet_directory() != get_template_directory()) {
     View::addLocation(realpath(get_template_directory() . '/Resources/views') ?: get_template_directory());
 }
 
@@ -200,20 +205,23 @@ if(get_stylesheet_directory() != get_template_directory()){
  * 作用：即使你设置固定连接结构为 %postname% ，仍旧自动生成 ID 结构的链接
  * http://www.wpdaxue.com/wordpress-using-post-id-as-slug.html
  */
-add_action( 'save_post', 'using_id_as_slug', 10, 2 );
-function using_id_as_slug($post_id, $post){
-	global $post_type;
-	if($post_type=='post'){ //只对文章生效
-		// 如果是文章的版本，不生效
-		if (wp_is_post_revision($post_id))
-			return false;
-		// 取消挂载该函数，防止无限循环
-		remove_action('save_post', 'using_id_as_slug' );
-		// 使用文章ID作为文章的别名
-		wp_update_post(array('ID' => $post_id, 'post_name' => $post_id ));
-		// 重新挂载该函数
-		add_action('save_post', 'using_id_as_slug' );
-	}
+add_action('save_post', 'using_id_as_slug', 10, 2);
+function using_id_as_slug($post_id, $post = null)
+{
+    global $post_type;
+    if ($post_type != 'page' && $post_type) { //只对文章生效
+        // 如果是文章的版本，不生效
+        if (wp_is_post_revision($post_id)) {
+            return false;
+        }
+        // 取消挂载该函数，防止无限循环
+        remove_action('save_post', 'using_id_as_slug');
+        // 使用文章ID作为文章的别名
+        $hashid = new Hashids\hashids($post_type, 6, 'abcdefghijklmnopqrstuvwxyz0123456789');
+        wp_update_post(array('ID' => $post_id, 'post_name' => $hashid->encode($post_id)));
+        // 重新挂载该函数
+        add_action('save_post', 'using_id_as_slug');
+    }
 }
 
 

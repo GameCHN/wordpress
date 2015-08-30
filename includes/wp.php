@@ -132,7 +132,10 @@ require( __DIR__. '/template.php' );
 require( ABSPATH . WPINC . '/user.php' );
 require( ABSPATH . WPINC . '/session.php' );
 require( ABSPATH . WPINC . '/meta.php' );
-require( ABSPATH . WPINC . '/general-template.php' );
+//foolant
+//require( ABSPATH . WPINC . '/general-template.php' );
+require( __DIR__. '/general-template.php' );
+
 require( ABSPATH . WPINC . '/link-template.php' );
 require( ABSPATH . WPINC . '/author-template.php' );
 require( ABSPATH . WPINC . '/post.php' );
