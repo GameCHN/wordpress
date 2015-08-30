@@ -217,7 +217,7 @@ function using_id_as_slug($post_id, $post = null)
         // 取消挂载该函数，防止无限循环
         remove_action('save_post', 'using_id_as_slug');
         // 使用文章ID作为文章的别名
-        $hashid = new Hashids\hashids($post_type, 6, 'abcdefghijklmnopqrstuvwxyz0123456789');
+        $hashid = new Hashids\Hashids($post_type, 6, 'abcdefghijklmnopqrstuvwxyz0123456789');
         wp_update_post(array('ID' => $post_id, 'post_name' => $hashid->encode($post_id)));
         // 重新挂载该函数
         add_action('save_post', 'using_id_as_slug');
