@@ -16,37 +16,37 @@
  *
  * @since 1.5.0
  *
- * @param string $type Filename without extension.
+ * @param string $type      Filename without extension.
  * @param array  $templates An optional list of template candidates
  * @return string Full path to template file.
  */
-function get_query_template($type, $templates = array())
-{
-    $type = preg_replace('|[^a-z0-9-]+|', '', $type);
+function get_query_template( $type, $templates = array() ) {
+	$type = preg_replace( '|[^a-z0-9-]+|', '', $type );
 
-    if (empty($templates)) {
-        $templates = array("{$type}.php");
-    }
+	if ( empty( $templates ) )
+		$templates = array("{$type}.php");
 
-    $template = locate_template($templates);
-    /**
-     * Filter the path of the queried template by type.
-     *
-     * The dynamic portion of the hook name, `$type`, refers to the filename
-     * -- minus the extension -- of the file to load. This hook also applies
-     * to various types of files loaded as part of the Template Hierarchy.
-     *
-     * @since 1.5.0
-     *
-     * @param string $template Path to the template. See {@see locate_template()}.
-     */
-    return apply_filters("{$type}_template", $template);
+	$template = locate_template( $templates );
+
+	/**
+	 * Filter the path of the queried template by type.
+	 *
+	 * The dynamic portion of the hook name, `$type`, refers to the filename -- minus the file
+	 * extension and any non-alphanumeric characters delimiting words -- of the file to load.
+	 * This hook also applies to various types of files loaded as part of the Template Hierarchy.
+	 *
+	 * @since 1.5.0
+	 *
+	 * @param string $template Path to the template. See locate_template().
+	 */
+	return apply_filters( "{$type}_template", $template );
 }
 
 /**
  * Retrieve path of index template in current or parent template.
  *
- * The template path is filterable via the 'index_template' hook.
+ * The template path is filterable via the dynamic {@see '$type_template'} hook,
+ * e.g. 'index_template'.
  *
  * @since 3.0.0
  *
@@ -54,15 +54,15 @@ function get_query_template($type, $templates = array())
  *
  * @return string Full path to index template file.
  */
-function get_index_template()
-{
-    return get_query_template('index');
+function get_index_template() {
+	return get_query_template('index');
 }
 
 /**
  * Retrieve path of 404 template in current or parent template.
  *
- * The template path is filterable via the '404_template' hook.
+ * The template path is filterable via the dynamic {@see '$type_template'} hook,
+ * e.g. '404_template'.
  *
  * @since 1.5.0
  *
@@ -70,15 +70,15 @@ function get_index_template()
  *
  * @return string Full path to 404 template file.
  */
-function get_404_template()
-{
-    return get_query_template('404');
+function get_404_template() {
+	return get_query_template('404');
 }
 
 /**
  * Retrieve path of archive template in current or parent template.
  *
- * The template path is filterable via the 'archive_template' hook.
+ * The template path is filterable via the dynamic {@see '$type_template'} hook,
+ * e.g. 'archive_template'.
  *
  * @since 1.5.0
  *
@@ -86,25 +86,25 @@ function get_404_template()
  *
  * @return string Full path to archive template file.
  */
-function get_archive_template()
-{
-    $post_types = array_filter((array)get_query_var('post_type'));
+function get_archive_template() {
+	$post_types = array_filter( (array) get_query_var( 'post_type' ) );
 
-    $templates = array();
+	$templates = array();
 
-    if (count($post_types) == 1) {
-        $post_type = reset($post_types);
-        $templates[] = "archive-{$post_type}.php";
-    }
-    $templates[] = 'archive.php';
+	if ( count( $post_types ) == 1 ) {
+		$post_type = reset( $post_types );
+		$templates[] = "archive-{$post_type}.php";
+	}
+	$templates[] = 'archive.php';
 
-    return get_query_template('archive', $templates);
+	return get_query_template( 'archive', $templates );
 }
 
 /**
  * Retrieve path of post type archive template in current or parent template.
  *
- * The template path is filterable via the 'archive_template' hook.
+ * The template path is filterable via the dynamic {@see '$type_template'} hook,
+ * e.g. 'archive_template'.
  *
  * @since 3.7.0
  *
@@ -112,25 +112,23 @@ function get_archive_template()
  *
  * @return string Full path to archive template file.
  */
-function get_post_type_archive_template()
-{
-    $post_type = get_query_var('post_type');
-    if (is_array($post_type)) {
-        $post_type = reset($post_type);
-    }
+function get_post_type_archive_template() {
+	$post_type = get_query_var( 'post_type' );
+	if ( is_array( $post_type ) )
+		$post_type = reset( $post_type );
 
-    $obj = get_post_type_object($post_type);
-    if (!$obj->has_archive) {
-        return '';
-    }
+	$obj = get_post_type_object( $post_type );
+	if ( ! $obj->has_archive )
+		return '';
 
-    return get_archive_template();
+	return get_archive_template();
 }
 
 /**
  * Retrieve path of author template in current or parent template.
  *
- * The template path is filterable via the 'author_template' hook.
+ * The template path is filterable via the dynamic {@see '$type_template'} hook,
+ * e.g. 'author_template'.
  *
  * @since 1.5.0
  *
@@ -138,29 +136,29 @@ function get_post_type_archive_template()
  *
  * @return string Full path to author template file.
  */
-function get_author_template()
-{
-    $author = get_queried_object();
+function get_author_template() {
+	$author = get_queried_object();
 
-    $templates = array();
+	$templates = array();
 
-    if ($author instanceof WP_User) {
-        $templates[] = "author-{$author->user_nicename}.php";
-        $templates[] = "author-{$author->ID}.php";
-    }
-    $templates[] = 'author.php';
+	if ( $author instanceof WP_User ) {
+		$templates[] = "author-{$author->user_nicename}.php";
+		$templates[] = "author-{$author->ID}.php";
+	}
+	$templates[] = 'author.php';
 
-    return get_query_template('author', $templates);
+	return get_query_template( 'author', $templates );
 }
 
 /**
  * Retrieve path of category template in current or parent template.
  *
- * Works by first retrieving the current slug, for example 'category-default.php', and then
- * trying category ID, for example 'category-1.php', and will finally fall back to category.php
- * template, if those files don't exist.
+ * Works by first retrieving the current slug, for example 'category-default.php',
+ * and then trying category ID, for example 'category-1.php', and will finally fall
+ * back to category.php template, if those files don't exist.
  *
- * The template path is filterable via the 'category_template' hook.
+ * The template path is filterable via the dynamic {@see '$type_template'} hook,
+ * e.g. 'category_template'.
  *
  * @since 1.5.0
  *
@@ -168,29 +166,29 @@ function get_author_template()
  *
  * @return string Full path to category template file.
  */
-function get_category_template()
-{
-    $category = get_queried_object();
+function get_category_template() {
+	$category = get_queried_object();
 
-    $templates = array();
+	$templates = array();
 
-    if (!empty($category->slug)) {
-        $templates[] = "category-{$category->slug}.php";
-        $templates[] = "category-{$category->term_id}.php";
-    }
-    $templates[] = 'category.php';
+	if ( ! empty( $category->slug ) ) {
+		$templates[] = "category-{$category->slug}.php";
+		$templates[] = "category-{$category->term_id}.php";
+	}
+	$templates[] = 'category.php';
 
-    return get_query_template('category', $templates);
+	return get_query_template( 'category', $templates );
 }
 
 /**
  * Retrieve path of tag template in current or parent template.
  *
- * Works by first retrieving the current tag name, for example 'tag-wordpress.php', and then
- * trying tag ID, for example 'tag-1.php', and will finally fall back to tag.php
- * template, if those files don't exist.
+ * Works by first retrieving the current tag name, for example 'tag-wordpress.php',
+ * and then trying tag ID, for example 'tag-1.php', and will finally fall back to
+ * tag.php template, if those files don't exist.
  *
- * The template path is filterable via the 'tag_template' hook.
+ * The template path is filterable via the dynamic {@see '$type_template'} hook,
+ * e.g. 'tag_template'.
  *
  * @since 2.3.0
  *
@@ -198,19 +196,18 @@ function get_category_template()
  *
  * @return string Full path to tag template file.
  */
-function get_tag_template()
-{
-    $tag = get_queried_object();
+function get_tag_template() {
+	$tag = get_queried_object();
 
-    $templates = array();
+	$templates = array();
 
-    if (!empty($tag->slug)) {
-        $templates[] = "tag-{$tag->slug}.php";
-        $templates[] = "tag-{$tag->term_id}.php";
-    }
-    $templates[] = 'tag.php';
+	if ( ! empty( $tag->slug ) ) {
+		$templates[] = "tag-{$tag->slug}.php";
+		$templates[] = "tag-{$tag->term_id}.php";
+	}
+	$templates[] = 'tag.php';
 
-    return get_query_template('tag', $templates);
+	return get_query_template( 'tag', $templates );
 }
 
 /**
@@ -225,7 +222,8 @@ function get_tag_template()
  * template is used. If none of the files exist, then it will fall back on to
  * index.php.
  *
- * The template path is filterable via the 'taxonomy_template' hook.
+ * The template path is filterable via the dynamic {@see '$type_template'} hook,
+ * e.g. 'taxonomy_template'.
  *
  * @since 2.5.0
  *
@@ -233,26 +231,26 @@ function get_tag_template()
  *
  * @return string Full path to taxonomy template file.
  */
-function get_taxonomy_template()
-{
-    $term = get_queried_object();
+function get_taxonomy_template() {
+	$term = get_queried_object();
 
-    $templates = array();
+	$templates = array();
 
-    if (!empty($term->slug)) {
-        $taxonomy = $term->taxonomy;
-        $templates[] = "taxonomy-$taxonomy-{$term->slug}.php";
-        $templates[] = "taxonomy-$taxonomy.php";
-    }
-    $templates[] = 'taxonomy.php';
+	if ( ! empty( $term->slug ) ) {
+		$taxonomy = $term->taxonomy;
+		$templates[] = "taxonomy-$taxonomy-{$term->slug}.php";
+		$templates[] = "taxonomy-$taxonomy.php";
+	}
+	$templates[] = 'taxonomy.php';
 
-    return get_query_template('taxonomy', $templates);
+	return get_query_template( 'taxonomy', $templates );
 }
 
 /**
  * Retrieve path of date template in current or parent template.
  *
- * The template path is filterable via the 'date_template' hook.
+ * The template path is filterable via the dynamic {@see '$type_template'} hook,
+ * e.g. 'date_template'.
  *
  * @since 1.5.0
  *
@@ -260,9 +258,8 @@ function get_taxonomy_template()
  *
  * @return string Full path to date template file.
  */
-function get_date_template()
-{
-    return get_query_template('date');
+function get_date_template() {
+	return get_query_template('date');
 }
 
 /**
@@ -271,7 +268,8 @@ function get_date_template()
  * This is the template used for the page containing the blog posts.
  * Attempts to locate 'home.php' first before falling back to 'index.php'.
  *
- * The template path is filterable via the 'home_template' hook.
+ * The template path is filterable via the dynamic {@see '$type_template'} hook,
+ * e.g. 'home_template'.
  *
  * @since 1.5.0
  *
@@ -279,18 +277,17 @@ function get_date_template()
  *
  * @return string Full path to home template file.
  */
-function get_home_template()
-{
-    $templates = array('home.php', 'index.php');
+function get_home_template() {
+	$templates = array( 'home.php', 'index.php' );
 
-    return get_query_template('home', $templates);
+	return get_query_template( 'home', $templates );
 }
 
 /**
  * Retrieve path of front-page template in current or parent template.
  *
  * Looks for 'front-page.php'. The template path is filterable via the
- * 'front_page_template' hook.
+ * dynamic {@see '$type_template'} hook, e.g. 'frontpage_template'.
  *
  * @since 3.0.0
  *
@@ -298,11 +295,10 @@ function get_home_template()
  *
  * @return string Full path to front page template file.
  */
-function get_front_page_template()
-{
-    $templates = array('front-page.php');
+function get_front_page_template() {
+	$templates = array('front-page.php');
 
-    return get_query_template('front_page', $templates);
+	return get_query_template( 'front_page', $templates );
 }
 
 /**
@@ -312,7 +308,8 @@ function get_front_page_template()
  * Then will search for 'page-{slug}.php', followed by 'page-{id}.php',
  * and finally 'page.php'.
  *
- * The template path is filterable via the 'page_template' hook.
+ * The template path is filterable via the dynamic {@see '$type_template'} hook,
+ * e.g. 'page_template'.
  *
  * @since 1.5.0
  *
@@ -320,39 +317,35 @@ function get_front_page_template()
  *
  * @return string Full path to page template file.
  */
-function get_page_template()
-{
-    $id = get_queried_object_id();
-    $template = get_page_template_slug();
-    $pagename = get_query_var('pagename');
+function get_page_template() {
+	$id = get_queried_object_id();
+	$template = get_page_template_slug();
+	$pagename = get_query_var('pagename');
 
-    if (!$pagename && $id) {
-        // If a static page is set as the front page, $pagename will not be set. Retrieve it from the queried object
-        $post = get_queried_object();
-        if ($post) {
-            $pagename = $post->post_name;
-        }
-    }
+	if ( ! $pagename && $id ) {
+		// If a static page is set as the front page, $pagename will not be set. Retrieve it from the queried object
+		$post = get_queried_object();
+		if ( $post )
+			$pagename = $post->post_name;
+	}
 
-    $templates = array();
-    if ($template && 0 === validate_file($template)) {
-        $templates[] = $template;
-    }
-    if ($pagename) {
-        $templates[] = "page-$pagename.php";
-    }
-    if ($id) {
-        $templates[] = "page-$id.php";
-    }
-    $templates[] = 'page.php';
+	$templates = array();
+	if ( $template && 0 === validate_file( $template ) )
+		$templates[] = $template;
+	if ( $pagename )
+		$templates[] = "page-$pagename.php";
+	if ( $id )
+		$templates[] = "page-$id.php";
+	$templates[] = 'page.php';
 
-    return get_query_template('page', $templates);
+	return get_query_template( 'page', $templates );
 }
 
 /**
  * Retrieve path of paged template in current or parent template.
  *
- * The template path is filterable via the 'paged_template' hook.
+ * The template path is filterable via the dynamic {@see '$type_template'} hook,
+ * e.g. 'paged_template'.
  *
  * @since 1.5.0
  *
@@ -360,15 +353,15 @@ function get_page_template()
  *
  * @return string Full path to paged template file.
  */
-function get_paged_template()
-{
-    return get_query_template('paged');
+function get_paged_template() {
+	return get_query_template('paged');
 }
 
 /**
  * Retrieve path of search template in current or parent template.
  *
- * The template path is filterable via the 'search_template' hook.
+ * The template path is filterable via the dynamic {@see '$type_template'} hook,
+ * e.g. 'search_template'.
  *
  * @since 1.5.0
  *
@@ -376,15 +369,15 @@ function get_paged_template()
  *
  * @return string Full path to search template file.
  */
-function get_search_template()
-{
-    return get_query_template('search');
+function get_search_template() {
+	return get_query_template('search');
 }
 
 /**
  * Retrieve path of single template in current or parent template.
  *
- * The template path is filterable via the 'single_template' hook.
+ * The template path is filterable via the dynamic {@see '$type_template'} hook,
+ * e.g. 'single_template'.
  *
  * @since 1.5.0
  *
@@ -392,18 +385,32 @@ function get_search_template()
  *
  * @return string Full path to single template file.
  */
-function get_single_template()
-{
-    $object = get_queried_object();
+function get_single_template() {
+	$object = get_queried_object();
 
-    $templates = array();
+	$templates = array();
 
-    if (!empty($object->post_type)) {
-        $templates[] = "single-{$object->post_type}.php";
-    }
-    $templates[] = "single.php";
+	if ( ! empty( $object->post_type ) )
+		$templates[] = "single-{$object->post_type}.php";
+	$templates[] = "single.php";
 
-    return get_query_template('single', $templates);
+	return get_query_template( 'single', $templates );
+}
+
+/**
+ * Retrieves the path of the singular template in current or parent template.
+ *
+ * The template path is filterable via the dynamic {@see '$type_template'} hook,
+ * e.g. 'singular_template'.
+ *
+ * @since 4.3.0
+ *
+ * @see get_query_template()
+ *
+ * @return string Full path to singular template file
+ */
+function get_singular_template() {
+	return get_query_template( 'singular' );
 }
 
 /**
@@ -415,37 +422,40 @@ function get_single_template()
  * 'attachment.php' is checked and returned.
  *
  * Some examples for the 'text/plain' mime type are 'text.php', 'plain.php', and
- * finally 'text_plain.php'.
+ * finally 'text-plain.php'.
  *
- * The template path is filterable via the 'attachment_template' hook.
+ * The template path is filterable via the dynamic {@see '$type_template'} hook,
+ * e.g. 'attachment_template'.
  *
  * @since 2.0.0
  *
  * @see get_query_template()
  *
+ * @global array $posts
+ *
  * @return string Full path to attachment template file.
  */
-function get_attachment_template()
-{
-    global $posts;
+function get_attachment_template() {
+	$attachment = get_queried_object();
 
-    if (!empty($posts) && isset($posts[0]->post_mime_type)) {
-        $type = explode('/', $posts[0]->post_mime_type);
+	$templates = array();
 
-        if (!empty($type)) {
-            if ($template = get_query_template($type[0])) {
-                return $template;
-            } elseif (!empty($type[1])) {
-                if ($template = get_query_template($type[1])) {
-                    return $template;
-                } elseif ($template = get_query_template("$type[0]_$type[1]")) {
-                    return $template;
-                }
-            }
-        }
-    }
+	if ( $attachment ) {
+		if ( false !== strpos( $attachment->post_mime_type, '/' ) ) {
+			list( $type, $subtype ) = explode( '/', $attachment->post_mime_type );
+		} else {
+			list( $type, $subtype ) = array( $attachment->post_mime_type, '' );
+		}
 
-    return get_query_template('attachment');
+		if ( ! empty( $subtype ) ) {
+			$templates[] = "{$type}-{$subtype}.php";
+			$templates[] = "{$subtype}.php";
+		}
+		$templates[] = "{$type}.php";
+	}
+	$templates[] = 'attachment.php';
+
+	return get_query_template( 'attachment', $templates );
 }
 
 /**
@@ -454,7 +464,8 @@ function get_attachment_template()
  * Checks for comment popup template in current template, if it exists or in the
  * parent template.
  *
- * The template path is filterable via the 'comments_popup_template' hook.
+ * The template path is filterable via the dynamic {@see '$type_template'} hook,
+ * e.g. 'commentspopup_template'.
  *
  * @since 1.5.0
  *
@@ -462,16 +473,14 @@ function get_attachment_template()
  *
  * @return string Full path to comments popup template file.
  */
-function get_comments_popup_template()
-{
-    $template = get_query_template('comments_popup', array('comments-popup.php'));
+function get_comments_popup_template() {
+	$template = get_query_template( 'comments_popup', array( 'comments-popup.php' ) );
 
-    // Backward compat code will be removed in a future release
-    if ('' == $template) {
-        $template = ABSPATH . WPINC . '/theme-compat/comments-popup.php';
-    }
+	// Backward compat code will be removed in a future release.
+	if ('' == $template)
+		$template = ABSPATH . WPINC . '/theme-compat/comments-popup.php';
 
-    return $template;
+	return $template;
 }
 
 /**
@@ -483,8 +492,8 @@ function get_comments_popup_template()
  * @since 2.7.0
  *
  * @param string|array $template_names Template file(s) to search for, in order.
- * @param bool         $load If true the template file will be loaded if it is found.
- * @param bool         $require_once Whether to require_once or require. Default true. Has no effect if $load is false.
+ * @param bool         $load           If true the template file will be loaded if it is found.
+ * @param bool         $require_once   Whether to require_once or require. Default true. Has no effect if $load is false.
  * @return string The template filename if one is located.
  */
 function locate_template($template_names, $load = false, $require_once = true)
@@ -530,11 +539,7 @@ function locate_template($template_names, $load = false, $require_once = true)
         load_template($located, $require_once);
     }
 
-    if (preg_match("/\.blade\.php$/", $located)) {
-        //kd(load_template($located, null));
-    }
-
-    return preg_match("/\.blade\.php$/", $located) ? load_template($located, null) : $located;
+	return $located;
 }
 
 /**
@@ -546,18 +551,31 @@ function locate_template($template_names, $load = false, $require_once = true)
  *
  * @since 1.5.0
  *
+ * @global array      $posts
+ * @global WP_Post    $post
+ * @global bool       $wp_did_header
+ * @global WP_Query   $wp_query
+ * @global WP_Rewrite $wp_rewrite
+ * @global wpdb       $wpdb
+ * @global string     $wp_version
+ * @global WP         $wp
+ * @global int        $id
+ * @global object     $comment
+ * @global int        $user_ID
+ *
  * @param string $_template_file Path to template file.
- * @param bool   $require_once Whether to require_once or require. Default true.
+ * @param bool   $require_once   Whether to require_once or require. Default true.
  */
-function load_template($_template_file, $require_once = true)
-{
-    global $posts, $post, $wp_did_header, $wp_query, $wp_rewrite, $wpdb, $wp_version, $wp, $id, $comment, $user_ID;
+function load_template( $_template_file, $require_once = true ) {
+	global $posts, $post, $wp_did_header, $wp_query, $wp_rewrite, $wpdb, $wp_version, $wp, $id, $comment, $user_ID;
 
-    if (is_array($wp_query->query_vars)) {
-        extract($wp_query->query_vars, EXTR_SKIP);
-    }
+	if ( is_array( $wp_query->query_vars ) ) {
+		extract( $wp_query->query_vars, EXTR_SKIP );
+	}
 
-
+	if ( isset( $s ) ) {
+		$s = esc_attr( $s );
+	}
 
     if ($require_once === null) {
         return $_template_file;
@@ -578,10 +596,10 @@ function load_template($_template_file, $require_once = true)
         return '';
     }
 
-    if ($require_once) {
-        require_once($_template_file);
-    } else {
-        require($_template_file);
-    }
+	if ( $require_once ) {
+		require_once( $_template_file );
+	} else {
+		require( $_template_file );
+	}
 }
 
